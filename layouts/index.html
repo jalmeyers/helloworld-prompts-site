@@ -1,25 +1,34 @@
 {{ define "main" }}
 <h1>Prompt library</h1>
-<p class="muted">Search the library, <a href="/tags/">browse by tag</a>, open a prompt and copy it, or <a href="/install/">install the whole library as a Claude skill</a>.</p>
+<p class="muted">Search the library, browse by category or <a href="/tags/">by tag</a>, open a prompt and copy it,
+  or <a href="/install/">install the whole library as a Claude skill</a>.</p>
 
-<input type="search" id="q" placeholder="Search prompts by name, description or tag…" autofocus>
+<input type="search" id="q" placeholder="Search prompts by name, description, category or tag…" autofocus>
 
+{{/* One group per category folder, in weight order; prompts in weight order within each. */}}
 <div id="list">
-  {{ range (where site.RegularPages "Section" "prompts").ByTitle }}{{ partial "card.html" . }}{{ end }}
+  {{ with site.GetPage "/prompts" }}
+  {{ range .Sections.ByWeight }}
+  <section class="group">
+    <h2 class="group-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="muted group-desc">{{ .Description }}</p>
+    {{ range .Pages.ByWeight }}{{ partial "card.html" . }}{{ end }}
+  </section>
+  {{ end }}
+  {{ end }}
 </div>
 <p id="none" class="muted" hidden>No prompts match that search.</p>
 
 <script>
   const q = document.getElementById('q');
   const cards = [...document.querySelectorAll('#list .card')];
+  const groups = [...document.querySelectorAll('#list .group')];
   q.addEventListener('input', () => {
     const terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
-    let shown = 0;
-    cards.forEach(c => {
-      const hit = terms.every(t => c.dataset.search.includes(t));
-      c.hidden = !hit; if (hit) shown++;
-    });
-    document.getElementById('none').hidden = shown > 0;
+    cards.forEach(c => c.hidden = !terms.every(t => c.dataset.search.includes(t)));
+    // Hide a category heading when none of its prompts match.
+    groups.forEach(g => g.hidden = !g.querySelector('.card:not([hidden])'));
+    document.getElementById('none').hidden = cards.some(c => !c.hidden);
   });
 </script>
 {{ end }}

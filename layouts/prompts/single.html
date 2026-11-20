@@ -1,7 +1,19 @@
 {{ define "main" }}
-<p><a href="/">← All prompts</a></p>
-<h1>{{ .Title }}</h1>
+<p class="crumbs"><a href="/">Prompts</a> › <a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a></p>
+<h1>{{ .Title }}{{ if .Draft }} <span class="badge">Draft</span>{{ end }}</h1>
 <p class="muted">{{ .Description }}</p>
+
+{{ if .Draft }}
+<p class="draft-note">This prompt is a draft. It's only visible in preview and isn't in the released skill yet.</p>
+{{ end }}
+
+{{ with .Params.inputs }}
+<div class="inputs">
+  <strong>You'll need:</strong>
+  {{ range . }}<code>[{{ . }}]</code>{{ end }}
+</div>
+{{ end }}
+
 <div class="toolbar">
   <div>{{ partial "tags.html" . }}</div>
   <button id="copy">Copy prompt</button>

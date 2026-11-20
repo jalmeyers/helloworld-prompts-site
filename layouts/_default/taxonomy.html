@@ -2,10 +2,11 @@
 {{ define "main" }}
 <h1>Tags</h1>
 <p class="muted">Browse prompts by what they're for.</p>
-{{ range .Pages.ByTitle }}
+{{/* Skip tags whose only prompts are drafts. */}}
+{{ range .Pages.ByTitle }}{{ if .Pages }}
 <div class="card">
   <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="muted">· {{ len .Pages }} prompt{{ if ne (len .Pages) 1 }}s{{ end }}</span></h2>
   {{ with .Description }}<p class="muted">{{ . }}</p>{{ end }}
 </div>
-{{ end }}
+{{ end }}{{ end }}
 {{ end }}

@@ -29,7 +29,8 @@ Requires [Hugo](https://gohugo.io/installation/) (v0.120 or newer).
 
 ```bash
 make serve    # preview at http://localhost:1313
-make build    # site into public/
+make serve-drafts   # preview including draft prompts
+make build    # site into public/ (never includes drafts)
 ```
 
 ## Publish new prompts

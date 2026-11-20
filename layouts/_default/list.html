@@ -1,4 +1,21 @@
+{{/* Category pages (/prompts/writing/) and the all-categories page (/prompts/). */}}
 {{ define "main" }}
+{{ if .Parent }}{{ if ne .Parent.Kind "home" }}<p class="crumbs"><a href="/">Prompts</a> › </p>{{ end }}{{ end }}
 <h1>{{ .Title }}</h1>
-{{ range .Pages.ByTitle }}{{ partial "card.html" . }}{{ end }}
+{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+{{ .Content }}
+
+{{ with .Sections }}
+{{ range .ByWeight }}
+<div class="card">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="muted">· {{ len .Pages }} prompt{{ if ne (len .Pages) 1 }}s{{ end }}</span></h2>
+  <p class="muted">{{ .Description }}</p>
+</div>
+{{ end }}
+{{ end }}
+
+{{ with .RegularPages }}
+<h2 class="count">{{ len . }} prompt{{ if ne (len .) 1 }}s{{ end }}</h2>
+{{ range .ByWeight }}{{ partial "card.html" . }}{{ end }}
+{{ end }}
 {{ end }}

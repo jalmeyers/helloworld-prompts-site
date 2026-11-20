@@ -1,6 +1,7 @@
-{{/* One prompt card. Used on the home page, the prompts list and each tag page. */}}
-<div class="card" data-search="{{ lower (printf "%s %s %s" .Title .Description (delimit (.Params.tags | default slice) " ")) }}">
-  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+{{/* One prompt card. Used on the home page, category pages and tag pages. */}}
+{{ $section := .Parent.Title }}
+<div class="card" data-search="{{ lower (printf "%s %s %s %s" .Title .Description $section (delimit (.Params.tags | default slice) " ")) }}">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ if .Draft }} <span class="badge">Draft</span>{{ end }}</h2>
   <p class="muted">{{ .Description }}</p>
   {{ partial "tags.html" . }}
 </div>
