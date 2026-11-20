@@ -1,0 +1,30 @@
+# Upsun deploy: builds the Hugo site from this repo plus the library submodule.
+# The skill zip isn't built here; the install page links to the library's GitHub Release.
+applications:
+  site:
+    type: "python:3.12"   # any runtime with curl and tar works; nothing Python-specific runs
+    build:
+      flavor: none
+    variables:
+      env:
+        HUGO_VERSION: "0.139.4"
+    hooks:
+      build: |
+        set -e
+        curl -sSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" | tar -xz hugo
+        make build HUGO=./hugo
+    web:
+      commands:
+        start: sleep infinity   # static site: nothing to run, just serve files
+      locations:
+        "/":
+          root: "public"
+          index: ["index.html"]
+          passthru: false
+          allow: true
+          scripts: false
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "site:http"

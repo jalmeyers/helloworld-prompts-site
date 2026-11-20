@@ -1,0 +1,10 @@
+{{/* One tag's page, e.g. /tags/sales/. The explanation comes from content/tags/<tag>/_index.md. */}}
+{{ define "main" }}
+<p><a href="/tags/">← All tags</a></p>
+<h1>{{ .Title }}</h1>
+{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+{{ .Content }}
+
+<h2 class="count">{{ len .Pages }} prompt{{ if ne (len .Pages) 1 }}s{{ end }}</h2>
+{{ range .Pages.ByTitle }}{{ partial "card.html" . }}{{ end }}
+{{ end }}

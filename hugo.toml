@@ -1,0 +1,25 @@
+baseURL = "/"
+title = "Hello World Prompt Library"
+disableKinds = ["RSS", "sitemap"]
+
+[params]
+  # The prompt library repo. Used for the skill download link and "view on GitHub" links.
+  libraryRepo = "https://github.com/OWNER/helloworld-prompts"
+  skillName = "helloworld-prompts"
+
+# Tags get an overview page (/tags/) and one page per tag (/tags/sales/).
+[taxonomies]
+  tag = "tags"
+
+# The prompts come from the library repo, checked out as a git submodule in library/.
+# This site has no prompts of its own.
+[module]
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "library/prompts"
+    target = "content/prompts"
+  [[module.mounts]]
+    source = "library/tags"
+    target = "content/tags"

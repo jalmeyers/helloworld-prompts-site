@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
+  <style>
+    :root { --fg:#1d1d1f; --muted:#6b6b70; --line:#e3e3e6; --bg:#fafafa; --card:#fff; --accent:#5b3cc4; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin:0; font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--fg); background:var(--bg); }
+    header, main, footer { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    header { display:flex; justify-content:space-between; align-items:center; padding-top:24px; padding-bottom:8px; }
+    header a { color:var(--fg); text-decoration:none; font-weight:600; }
+    nav a { font-weight:500; color:var(--accent); margin-left:16px; }
+    h1 { font-size:1.8rem; margin:24px 0 8px; }
+    .muted { color:var(--muted); }
+    input[type=search] { width:100%; padding:12px 14px; font-size:1rem; border:1px solid var(--line); border-radius:8px; margin:16px 0; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:12px; }
+    .card:hover { border-color:var(--accent); }
+    .card h2 { font-size:1.1rem; margin:0 0 4px; }
+    .card h2 a { color:var(--fg); text-decoration:none; }
+    .card h2 a:hover { color:var(--accent); }
+    .lead { font-size:1.1rem; }
+    h2.count { font-size:1rem; margin:28px 0 12px; color:var(--muted); font-weight:600; }
+    .card p { margin:0; }
+    .tag { display:inline-block; font-size:.75rem; background:#efeaff; color:var(--accent); border-radius:99px; padding:2px 9px; margin:8px 6px 0 0; text-decoration:none; }
+    a.tag:hover { background:var(--accent); color:#fff; }
+    .prompt { position:relative; background:var(--card); border:1px solid var(--line); border-radius:10px; margin:20px 0; }
+    .prompt pre { margin:0; padding:20px; white-space:pre-wrap; font:14px/1.6 ui-monospace,Menlo,monospace; }
+    button { cursor:pointer; background:var(--accent); color:#fff; border:0; border-radius:6px; padding:8px 14px; font-size:.9rem; }
+    .toolbar { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
+    .toolbar button { flex-shrink:0; }
+    .hint { background:#f1eefb; border-radius:8px; padding:12px 16px; font-size:.95rem; }
+    pre code { display:block; background:#1d1d1f; color:#f5f5f7; padding:14px; border-radius:8px; overflow-x:auto; }
+    footer { padding-top:40px; padding-bottom:40px; font-size:.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">{{ site.Title }}</a>
+    <nav><a href="/">Prompts</a><a href="/tags/">Tags</a><a href="/install/">Install as a skill</a></nav>
+  </header>
+  <main>{{ block "main" . }}{{ end }}</main>
+  <footer class="muted">Every prompt here lives as a Markdown file in the <a href="{{ site.Params.libraryRepo }}">prompt library repo</a>.</footer>
+</body>
+</html>

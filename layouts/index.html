@@ -1,0 +1,25 @@
+{{ define "main" }}
+<h1>Prompt library</h1>
+<p class="muted">Search the library, <a href="/tags/">browse by tag</a>, open a prompt and copy it, or <a href="/install/">install the whole library as a Claude skill</a>.</p>
+
+<input type="search" id="q" placeholder="Search prompts by name, description or tag…" autofocus>
+
+<div id="list">
+  {{ range (where site.RegularPages "Section" "prompts").ByTitle }}{{ partial "card.html" . }}{{ end }}
+</div>
+<p id="none" class="muted" hidden>No prompts match that search.</p>
+
+<script>
+  const q = document.getElementById('q');
+  const cards = [...document.querySelectorAll('#list .card')];
+  q.addEventListener('input', () => {
+    const terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    cards.forEach(c => {
+      const hit = terms.every(t => c.dataset.search.includes(t));
+      c.hidden = !hit; if (hit) shown++;
+    });
+    document.getElementById('none').hidden = shown > 0;
+  });
+</script>
+{{ end }}

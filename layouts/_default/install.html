@@ -1,0 +1,36 @@
+{{/* The install page. A template (not Markdown) so the links can come from hugo.toml params. */}}
+{{ define "main" }}
+{{ $repo := site.Params.libraryRepo }}
+{{ $name := site.Params.skillName }}
+{{ $zip := printf "%s/releases/latest/download/%s.zip" $repo $name }}
+
+<h1>{{ .Title }}</h1>
+
+<p>Installing the library as a skill lets Claude find and run these prompts for you. Instead of copying and pasting,
+you can say <em>"run the meeting notes to follow-up prompt"</em> or <em>"what sales prompts do you have?"</em></p>
+
+<p>A skill is a folder with a <code>SKILL.md</code> file that tells Claude what the skill is for and how to use it.
+This one also contains every prompt and tag on this site.</p>
+
+<h2>In the Claude app (web or desktop)</h2>
+<ol>
+  <li><a href="{{ $zip }}">Download {{ $name }}.zip</a> (the latest release).</li>
+  <li>In Claude, open <strong>Settings</strong> and find the <strong>Skills</strong> section.</li>
+  <li>Upload the zip and make sure the skill is turned on.</li>
+  <li>Start a new chat and ask: <em>"What prompts are in the hello world library?"</em></li>
+</ol>
+<p class="muted">If you don't see a Skills section, your workspace admin may need to enable skills (and code execution, which skills rely on).</p>
+
+<h2>In Claude Code</h2>
+<p>Clone the library, build the skill, and copy it into your personal skills folder:</p>
+<pre><code>git clone {{ $repo }}.git
+cd {{ $name }}
+./scripts/build-skill.sh
+mkdir -p ~/.claude/skills
+cp -r dist/{{ $name }} ~/.claude/skills/</code></pre>
+<p>To share it with everyone working in a project, copy it into that project's <code>.claude/skills/</code> folder instead.</p>
+
+<h2>Updating</h2>
+<p>When new prompts are released, download the zip again and re-upload it (or <code>git pull</code> and rerun the commands above).
+  See <a href="{{ $repo }}/releases">all releases</a>.</p>
+{{ end }}

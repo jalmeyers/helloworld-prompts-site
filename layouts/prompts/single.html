@@ -1,0 +1,29 @@
+{{ define "main" }}
+<p><a href="/">← All prompts</a></p>
+<h1>{{ .Title }}</h1>
+<p class="muted">{{ .Description }}</p>
+<div class="toolbar">
+  <div>{{ partial "tags.html" . }}</div>
+  <button id="copy">Copy prompt</button>
+</div>
+
+<div class="prompt">
+  <pre id="text">{{ trim .RawContent "\n" }}</pre>
+</div>
+
+<p class="muted">Paste this into Claude and replace anything in <code>[SQUARE BRACKETS]</code> before you submit it.
+  If you leave any unfilled, Claude will ask you for them.</p>
+
+<div class="hint">
+  <strong>Using the skill?</strong> Skip the copy and paste. Just ask Claude to
+  <em>"run the {{ .Title }} prompt"</em>. <a href="/install/">How to install the skill</a>
+</div>
+
+<script>
+  document.getElementById('copy').addEventListener('click', async (e) => {
+    await navigator.clipboard.writeText(document.getElementById('text').innerText);
+    e.target.textContent = 'Copied!';
+    setTimeout(() => e.target.textContent = 'Copy prompt', 1500);
+  });
+</script>
+{{ end }}

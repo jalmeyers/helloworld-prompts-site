@@ -1,0 +1,6 @@
+{{/* One prompt card. Used on the home page, the prompts list and each tag page. */}}
+<div class="card" data-search="{{ lower (printf "%s %s %s" .Title .Description (delimit (.Params.tags | default slice) " ")) }}">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <p class="muted">{{ .Description }}</p>
+  {{ partial "tags.html" . }}
+</div>
