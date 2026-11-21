@@ -1,0 +1,8 @@
+{{/* One tag's page, e.g. /tags/email/. The explanation comes from the library's tags/<tag>/_index.md. */}}
+<p><a href="/tags/">← All tags</a></p>
+<h1>{{ .Title }}</h1>
+{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+{{ .Content }}
+
+<h2 class="count">{{ len .Pages }} prompt{{ if ne (len .Pages) 1 }}s{{ end }}</h2>
+{{ range .Pages.ByTitle }}{{ partial "card.html" . }}{{ end }}

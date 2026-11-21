@@ -1,12 +1,6 @@
-{{/* The tag overview page, /tags/. */}}
+{{/* Older Hugo versions render /tags/ with taxonomy.html and /tags/<tag>/ with term.html.
+   Newer versions (0.146+) can use either file for both, so each one checks which page it's
+   rendering. Keep the two files identical. */}}
 {{ define "main" }}
-<h1>Tags</h1>
-<p class="muted">Browse prompts by what they're for.</p>
-{{/* Skip tags whose only prompts are drafts. */}}
-{{ range .Pages.ByTitle }}{{ if .Pages }}
-<div class="card">
-  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="muted">· {{ len .Pages }} prompt{{ if ne (len .Pages) 1 }}s{{ end }}</span></h2>
-  {{ with .Description }}<p class="muted">{{ . }}</p>{{ end }}
-</div>
-{{ end }}{{ end }}
+{{ if eq .Kind "term" }}{{ partial "tag-page.html" . }}{{ else }}{{ partial "tag-overview.html" . }}{{ end }}
 {{ end }}
