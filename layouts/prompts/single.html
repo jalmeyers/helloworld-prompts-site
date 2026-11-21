@@ -14,13 +14,18 @@
 </div>
 {{ end }}
 
-<div class="toolbar">
-  <div>{{ partial "tags.html" . }}</div>
-  <button id="copy">Copy prompt</button>
-</div>
+{{ partial "tags.html" . }}
 
+{{/* The prompt box: a label, the prompt text, then a separate strip with a caution and the copy button. */}}
 <div class="prompt">
-  <pre id="text">{{ trim .RawContent "\n" }}</pre>
+  <div class="prompt-body">
+    <div class="prompt-label">prompt</div>
+    <pre id="text">{{ trim .RawContent "\n" }}</pre>
+  </div>
+  <div class="prompt-footer">
+    <span>Leave out anything confidential, and check Claude's answer before you act on it or send it.</span>
+    <button id="copy" aria-label="Copy prompt">Copy prompt</button>
+  </div>
 </div>
 
 <p class="muted">Paste this into Claude and replace anything in <code>[SQUARE BRACKETS]</code> before you submit it.

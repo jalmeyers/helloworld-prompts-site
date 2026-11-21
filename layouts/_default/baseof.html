@@ -26,11 +26,13 @@
     .card p { margin:0; }
     .tag { display:inline-block; font-size:.75rem; background:#efeaff; color:var(--accent); border-radius:99px; padding:2px 9px; margin:8px 6px 0 0; text-decoration:none; }
     a.tag:hover { background:var(--accent); color:#fff; }
-    .prompt { position:relative; background:var(--card); border:1px solid var(--line); border-radius:10px; margin:20px 0; }
-    .prompt pre { margin:0; padding:20px; white-space:pre-wrap; font:14px/1.6 ui-monospace,Menlo,monospace; }
+    .prompt { margin:20px 0; }
+    .prompt-body { background:var(--card); border:1px solid var(--line); border-radius:12px 12px 0 0; padding:16px 20px 20px; }
+    .prompt-label { font-size:1.05rem; color:var(--fg); margin-bottom:10px; }
+    .prompt pre { margin:0; white-space:pre-wrap; font:14px/1.6 ui-monospace,Menlo,monospace; }
+    .prompt-footer { display:flex; justify-content:space-between; align-items:center; gap:16px; background:#f3f3f5; border:1px solid var(--line); border-top:0; margin-top:3px; border-radius:0 0 12px 12px; padding:10px 12px 10px 20px; font-size:.85rem; color:var(--muted); }
+    .prompt-footer button { flex-shrink:0; }
     button { cursor:pointer; background:var(--accent); color:#fff; border:0; border-radius:6px; padding:8px 14px; font-size:.9rem; }
-    .toolbar { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
-    .toolbar button { flex-shrink:0; }
     .hint { background:#f1eefb; border-radius:8px; padding:12px 16px; font-size:.95rem; }
     pre code { display:block; background:#1d1d1f; color:#f5f5f7; padding:14px; border-radius:8px; overflow-x:auto; }
     .group { margin-top:28px; }
