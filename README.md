@@ -25,7 +25,7 @@ If you already cloned without it: `git submodule update --init`.
 
 ## Run locally
 
-Requires [Hugo](https://gohugo.io/installation/). Tested with v0.139 and v0.153.
+Requires [Hugo](https://gohugo.io/installation/). Tested with v0.139, v0.153 and v0.170.
 
 ```bash
 make serve    # preview at http://localhost:1313
