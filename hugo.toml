@@ -4,7 +4,7 @@ disableKinds = ["RSS", "sitemap"]
 
 [params]
   # The prompt library repo. Used for the skill download link and "view on GitHub" links.
-  libraryRepo = "https://github.com/OWNER/helloworld-prompts"
+  libraryRepo = "https://github.com/jalmeyers/helloworld-prompts"
   skillName = "helloworld-prompts"
 
 # Tags get an overview page (/tags/) and one page per tag (/tags/sales/).

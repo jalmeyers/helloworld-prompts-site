@@ -1,6 +1,6 @@
 # Hello World Prompt Library — website
 
-The Hugo site for the [helloworld-prompts](https://github.com/OWNER/helloworld-prompts) library.
+The Hugo site for the [helloworld-prompts](https://github.com/jalmeyers/helloworld-prompts) library.
 This repo holds only the presentation: templates, styles and the install page. The prompts and
 tag explanations come from the library repo, which is included here as a git submodule in `library/`.
 
@@ -18,7 +18,7 @@ Makefile                  ← make serve / build / update-prompts
 The `--recurse-submodules` flag matters. Without it, `library/` is empty and the site has no prompts.
 
 ```bash
-git clone --recurse-submodules https://github.com/OWNER/helloworld-prompts-site.git
+git clone --recurse-submodules https://github.com/jalmeyers/helloworld-prompts-site.git
 ```
 
 If you already cloned without it: `git submodule update --init`.
