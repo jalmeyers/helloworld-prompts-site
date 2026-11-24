@@ -19,12 +19,21 @@
 {{/* The prompt box: a label, the prompt text, then a separate strip with a caution and the copy button. */}}
 <div class="prompt">
   <div class="prompt-body">
-    <div class="prompt-label">prompt</div>
-    <pre id="text">{{ trim .RawContent "\n" }}</pre>
+    <div class="prompt-header">
+      <span class="prompt-label">prompt</span>
+      <button class="copy-btn" type="button">Copy prompt</button>
+    </div>
+    {{/* Long prompts scroll inside the box (max height set in CSS); the fade shows there's more below. */}}
+    <div class="prompt-scroll-wrap" id="wrap">
+      <div class="prompt-scroll" id="scroll" tabindex="0" role="region" aria-label="Prompt text">
+        <pre id="text">{{ trim .RawContent "\n" }}</pre>
+      </div>
+    </div>
+    <button class="expand" id="expand" type="button" aria-controls="scroll" aria-expanded="false" hidden>Show full prompt</button>
   </div>
   <div class="prompt-footer">
     <span>Leave out anything confidential, and check Claude's answer before you act on it or send it.</span>
-    <button id="copy" aria-label="Copy prompt">Copy prompt</button>
+    <button class="copy-btn" type="button">Copy prompt</button>
   </div>
 </div>
 
@@ -37,10 +46,34 @@
 </div>
 
 <script>
-  document.getElementById('copy').addEventListener('click', async (e) => {
+  // Both copy buttons copy the full prompt (not just the visible part) and show "Copied!" together.
+  const copyButtons = document.querySelectorAll('.copy-btn');
+  copyButtons.forEach(btn => btn.addEventListener('click', async () => {
     await navigator.clipboard.writeText(document.getElementById('text').innerText);
-    e.target.textContent = 'Copied!';
-    setTimeout(() => e.target.textContent = 'Copy prompt', 1500);
+    copyButtons.forEach(b => b.textContent = 'Copied!');
+    setTimeout(() => copyButtons.forEach(b => b.textContent = 'Copy prompt'), 1500);
+  }));
+
+  // Scrolling box: show the fade and the "Show full prompt" toggle only when the prompt is taller than the box.
+  const wrap = document.getElementById('wrap');
+  const scroll = document.getElementById('scroll');
+  const expand = document.getElementById('expand');
+  const update = () => {
+    const expanded = wrap.classList.contains('expanded');
+    const overflows = scroll.scrollHeight > scroll.clientHeight + 1;
+    expand.hidden = !expanded && !overflows;
+    const atEnd = scroll.scrollTop + scroll.clientHeight >= scroll.scrollHeight - 2;
+    wrap.classList.toggle('has-more', !expanded && overflows && !atEnd);
+  };
+  expand.addEventListener('click', () => {
+    const expanded = wrap.classList.toggle('expanded');
+    expand.textContent = expanded ? 'Show less' : 'Show full prompt';
+    expand.setAttribute('aria-expanded', expanded);
+    if (!expanded) { scroll.scrollTop = 0; wrap.scrollIntoView({ block: 'nearest' }); }
+    update();
   });
+  scroll.addEventListener('scroll', update);
+  window.addEventListener('resize', update);
+  update();
 </script>
 {{ end }}

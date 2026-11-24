@@ -28,7 +28,18 @@
     a.tag:hover { background:var(--accent); color:#fff; }
     .prompt { margin:20px 0; }
     .prompt-body { background:var(--card); border:1px solid var(--line); border-radius:12px 12px 0 0; padding:16px 20px 20px; }
-    .prompt-label { font-size:.95rem; color:var(--muted); margin-bottom:10px; }
+    .prompt-header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:10px; }
+    .prompt-label { font-size:.95rem; color:var(--muted); }
+    .prompt-scroll-wrap { position:relative; }
+    .prompt-scroll { max-height:28rem; overflow-y:auto; }
+    .prompt-scroll-wrap.expanded .prompt-scroll { max-height:none; overflow:visible; }
+    .prompt-scroll:focus-visible { outline:2px solid var(--accent); outline-offset:4px; border-radius:4px; }
+    .prompt-scroll-wrap::after { content:""; position:absolute; left:0; right:0; bottom:0; height:56px; pointer-events:none;
+      background:linear-gradient(to bottom, rgba(255,255,255,0), var(--card)); opacity:0; transition:opacity .15s; }
+    .prompt-scroll-wrap.has-more::after { opacity:1; }
+    button.expand { background:none; color:var(--accent); padding:10px 0 0; font-size:.9rem; font-weight:500; }
+    button.expand:hover { text-decoration:underline; }
+    @media (max-width: 600px) { .prompt-scroll { max-height:20rem; } }
     .prompt pre { margin:0; white-space:pre-wrap; font:14px/1.6 ui-monospace,Menlo,monospace; }
     .prompt-footer { display:flex; justify-content:space-between; align-items:center; gap:16px; background:#f3f3f5; border:1px solid var(--line); border-top:0; margin-top:3px; border-radius:0 0 12px 12px; padding:10px 12px 10px 20px; font-size:.85rem; color:var(--muted); }
     .prompt-footer button { flex-shrink:0; }
